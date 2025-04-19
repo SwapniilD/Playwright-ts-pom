@@ -1,0 +1,21 @@
+{
+  "name": "learn-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Swapnil Dorge",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.10",
+    "allure-playwright": "^3.1.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.51.1",
+    "@zxing/library": "^0.21.3",
+    "playwright": "^1.51.1",
+    "pngjs": "^7.0.0",
+    "dotenv": "^16.5.0"
+  }
+}
