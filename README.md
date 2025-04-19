@@ -85,3 +85,12 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
+
+## Share & Support
+
+**Spread the word!** If this helped you, consider:  
+🔗 Sharing on [LinkedIn](your-post-link)  
+⭐ Starring the repo  
+🐛 Reporting issues  
+
+*"A solid Playwright TS starter saves hundreds of hours for dev teams."*  
