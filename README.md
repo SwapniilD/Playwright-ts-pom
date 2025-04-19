@@ -23,7 +23,7 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/playwright-ts-pom.git
+git clone https://github.com/SwapniilD/Playwright-ts-pom.git
 cd playwright-ts-pom
 
 # Install dependencies
@@ -31,3 +31,17 @@ npm install
 
 # Install browsers
 npx playwright install
+
+## Running Tests
+npm test	Run all tests
+npx playwright test --project=chromium	Run tests in specific browser
+npx playwright test tests/example.spec.ts	Run specific test file
+npx playwright test --headed	Run in headed mode
+npx playwright test --trace on	Run with trace (for debugging)
+
+## Report Generation
+# View HTML report
+npx playwright show-report
+
+# Generate CI-friendly report
+npx playwright test --reporter=html
