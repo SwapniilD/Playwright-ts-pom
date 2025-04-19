@@ -21,14 +21,14 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 
 ## Setup
 
-# Clone the repository
+## Clone the repository
 `git clone https://github.com/SwapniilD/Playwright-ts-pom.git`
 `cd playwright-ts-pom`
 
-# Install dependencies
+## Install dependencies
 `npm install`
 
-# Install browsers
+## Install browsers
 `npx playwright install`
 
 ## Running Tests
@@ -43,10 +43,10 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 5.`npx playwright test --trace` on	Run with trace (for debugging)
 
 ## Report Generation
-# View HTML report
+## View HTML report
 `npx playwright show-report`
 
-# Generate CI-friendly report
+## Generate CI-friendly report
 `npx playwright test --reporter=html`
 
 ## CI/CD Integration (GitHub Actions)
