@@ -84,7 +84,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
-          path: playwright-report/```
+          path: playwright-report/
+```
 
 ## Share & Support
 
