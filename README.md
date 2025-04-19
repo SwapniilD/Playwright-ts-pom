@@ -47,7 +47,7 @@ cd playwright-ts-pom
 
 ## CI/CD Integration (GitHub Actions)
 
-Add this workflow to `.github/workflows/playwright.yml`:
+Add this workflow to `.github/workflows/playwright.yml` for running tests on every push/PR with built-in reporting:
 
 ```yaml
 name: Playwright Tests
