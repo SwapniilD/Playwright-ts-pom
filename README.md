@@ -32,11 +32,11 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 `npx playwright install`
 
 ## Running Tests
-`npm test`	Run all tests
-`npx playwright test --project=chromium`	Run tests in specific browser
-`npx playwright test tests/example.spec.ts`	Run specific test file
-`npx playwright test --headed`	Run in headed mode
-`npx playwright test --trace` on	Run with trace (for debugging)
+1.`npm test`	Run all tests
+2.`npx playwright test --project=chromium`	Run tests in specific browser
+3.`npx playwright test tests/example.spec.ts`	Run specific test file
+4.`npx playwright test --headed`	Run in headed mode
+5.`npx playwright test --trace` on	Run with trace (for debugging)
 
 ## Report Generation
 # View HTML report
