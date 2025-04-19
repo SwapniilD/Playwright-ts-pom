@@ -1,2 +1,4 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# .gitattributes
+*.html linguist-language=TypeScript
+*.spec.ts linguist-language=TypeScript
+*.page.ts linguist-language=TypeScript
