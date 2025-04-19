@@ -21,27 +21,63 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 
 ## Setup
 
-```bash
 # Clone the repository
 git clone https://github.com/SwapniilD/Playwright-ts-pom.git
 cd playwright-ts-pom
 
 # Install dependencies
-npm install
+'npm install'
 
 # Install browsers
-npx playwright install
+'npx playwright install'
 
 ## Running Tests
-npm test	Run all tests
-npx playwright test --project=chromium	Run tests in specific browser
-npx playwright test tests/example.spec.ts	Run specific test file
-npx playwright test --headed	Run in headed mode
-npx playwright test --trace on	Run with trace (for debugging)
+'npm test'	Run all tests
+'npx playwright test --project=chromium'	Run tests in specific browser
+'npx playwright test tests/example.spec.ts'	Run specific test file
+'npx playwright test --headed'	Run in headed mode
+'npx playwright test --trace' on	Run with trace (for debugging)
 
 ## Report Generation
 # View HTML report
-npx playwright show-report
+'npx playwright show-report'
 
 # Generate CI-friendly report
-npx playwright test --reporter=html
+'npx playwright test --reporter=html'
+
+## CI/CD Integration (GitHub Actions)
+
+Add this workflow to `.github/workflows/playwright.yml`:
+
+```yaml
+name: Playwright Tests
+on: [push, pull_request]  # Triggers on push/PR events
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Install browsers
+        run: npx playwright install
+        
+      - name: Run tests
+        run: npx playwright test
+        
+      - name: Upload report
+        if: always()  # Upload even if tests fail
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/
