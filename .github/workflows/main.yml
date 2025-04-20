@@ -1,38 +1,37 @@
-name: Playwright Tests
-on: [push, pull_request]
+import { defineConfig, devices } from '@playwright/test';
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
-    steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Install browsers
-        run: npx playwright install
-      
-      - name: Run tests (${{ matrix.browser }})
-        run: npx playwright test --project=${{ matrix.browser }} || echo "Tests failed - continuing with report generation"
-        continue-on-error: true
-      
-      - name: Generate combined HTML report
-        run: |
-          mkdir -p playwright-report
-          npx playwright show-report --save-report=playwright-report
-        if: always()
-      
-      - name: Upload report
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-${{ matrix.browser }}
-          path: playwright-report/
-        if: always()
+export default defineConfig({
+  testDir: './tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0, // Retries in CI only
+  workers: process.env.CI ? 1 : undefined, // Single worker in CI
+  reporter: [
+    ['list'],
+    ['html', { 
+      outputFolder: 'playwright-report',
+      open: 'never'
+    }]
+  ],
+  use: {
+    baseURL: 'https://playwright.dev',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    headless: !!process.env.CI // Headless in CI, headed locally
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
+});
