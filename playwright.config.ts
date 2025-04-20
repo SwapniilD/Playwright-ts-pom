@@ -6,7 +6,13 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', { outputFolder: 'reports/html' }]],
+  reporter: [
+    ['list'],
+    ['html', { 
+      outputFolder: 'playwright-report',
+      open: 'never'
+    }]
+  ],
   use: {
     baseURL: 'https://playwright.dev',
     trace: 'on-first-retry',
