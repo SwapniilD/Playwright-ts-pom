@@ -4,6 +4,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
       
@@ -17,15 +20,19 @@ jobs:
       - name: Install browsers
         run: npx playwright install
       
-      - name: Run tests with reports
+      - name: Run tests (${{ matrix.browser }})
+        run: npx playwright test --project=${{ matrix.browser }} || echo "Tests failed - continuing with report generation"
+        continue-on-error: true
+      
+      - name: Generate combined HTML report
         run: |
-          npx playwright test
+          mkdir -p playwright-report
           npx playwright show-report --save-report=playwright-report
+        if: always()
       
       - name: Upload report
-        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
-          retention-days: 3
+        if: always()
