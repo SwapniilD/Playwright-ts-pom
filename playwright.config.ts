@@ -4,8 +4,8 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 0, // Retries in CI only
+  workers: process.env.CI ? 1 : undefined, // Single worker in CI
   reporter: [
     ['list'],
     ['html', { 
@@ -18,7 +18,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    headless: true,
+    headless: !!process.env.CI // Headless in CI, headed locally
   },
   projects: [
     {
