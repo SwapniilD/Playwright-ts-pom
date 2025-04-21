@@ -1,4 +1,5 @@
 name: Playwright Tests
+
 on: [push, pull_request]
 
 jobs:
@@ -7,29 +8,33 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]
-      fail-fast: false  # Continue other browsers if one fails
-    
+      fail-fast: false  # Continue running other browsers if one fails
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Install specific browser
         run: npx playwright install ${{ matrix.browser }}
-      
+
       - name: Run tests
         run: npx playwright test --project=${{ matrix.browser }}
-        continue-on-error: true
-      
-      - name: Generate report
+
+      - name: Generate HTML report
         if: always()
-        run: |
-          mkdir -p playwright-report
-          npx playwright show-report --save-report=playwright
+        run: npx playwright show-report --save-report=playwright-report
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report
