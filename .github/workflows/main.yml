@@ -30,7 +30,7 @@ jobs:
 
       - name: Generate HTML report
         if: always()
-        run: npx playwright show-report --save-report=playwright-report
+        run: npx playwright show-report --output=playwright-report
 
       - name: Upload HTML report
         if: always()
