@@ -1,35 +1,37 @@
-name: Playwright Tests
-on: [push, pull_request]
+import { defineConfig, devices } from '@playwright/test';
 
-jobs:
-  test:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
-      fail-fast: false  # Continue other browsers if one fails
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Install specific browser
-        run: npx playwright install ${{ matrix.browser }}
-      
-      - name: Run tests
-        run: npx playwright test --project=${{ matrix.browser }}
-        continue-on-error: true
-      
-      - name: Generate report
-        if: always()
-        run: |
-          mkdir -p playwright-report
-          npx playwright show-report --save-report=playwright
+export default defineConfig({
+  testDir: './tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0, // Retries in CI only
+  workers: process.env.CI ? 1 : undefined, // Single worker in CI
+  reporter: [
+    ['list'],
+    ['html', { 
+      outputFolder: 'playwright-report',
+      open: 'never'
+    }]
+  ],
+  use: {
+    baseURL: 'https://playwright.dev',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    headless: !!process.env.CI // Headless in CI, headed locally
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
+});
