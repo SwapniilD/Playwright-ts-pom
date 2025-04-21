@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]
-      fail-fast: false  # Continue running other browsers if one fails
+      fail-fast: false
 
     steps:
       - name: Checkout code
@@ -27,10 +27,6 @@ jobs:
 
       - name: Run tests
         run: npx playwright test --project=${{ matrix.browser }}
-
-      - name: Generate HTML report
-        if: always()
-        run: npx playwright show-report --output=playwright-report
 
       - name: Upload HTML report
         if: always()
