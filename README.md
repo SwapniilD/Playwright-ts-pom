@@ -55,36 +55,37 @@ Add this workflow to `.github/workflows/playwright.yml` for running tests on eve
 
 ```yaml
 name: Playwright Tests
-on: [push, pull_request]  # Triggers on push/PR events
+
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          
+
       - name: Install dependencies
         run: npm install
-        
-      - name: Install browsers
+
+      - name: Install all Playwright browsers
         run: npx playwright install
-        
-      - name: Run tests
+
+      - name: Run all tests (across all browsers)
         run: npx playwright test
-        
-      - name: Upload report
-        if: always()  # Upload even if tests fail
-        uses: actions/upload-artifact@v3
+
+      - name: Upload combined HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: playwright-report
 ```
 
 ## Share & Support
