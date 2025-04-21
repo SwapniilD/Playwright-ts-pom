@@ -51,7 +51,7 @@ A scalable test automation framework built with Playwright and TypeScript, imple
 
 ## CI/CD Integration (GitHub Actions)
 
-Add this workflow to `.github/workflows/playwright.yml` for running tests on every push/PR with built-in reporting:
+Add this workflow to `.github/workflows/main.yml` for running tests on every push/PR with built-in reporting:
 
 ```yaml
 name: Playwright Tests
