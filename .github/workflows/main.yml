@@ -5,10 +5,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
-      fail-fast: false
 
     steps:
       - name: Checkout code
@@ -22,15 +18,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install specific browser
-        run: npx playwright install ${{ matrix.browser }}
+      - name: Install all Playwright browsers
+        run: npx playwright install
 
-      - name: Run tests
-        run: npx playwright test --project=${{ matrix.browser }}
+      - name: Run all tests (across all browsers)
+        run: npx playwright test
 
-      - name: Upload HTML report
+      - name: Upload combined HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.browser }}
+          name: playwright-report
           path: playwright-report
