@@ -16,7 +16,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://playwright.dev',
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    screenshot: 'only-on-failure', // or 'on' to take on every step
     video: 'retain-on-failure',
     headless: !!process.env.CI // Headless in CI, headed locally
   },
